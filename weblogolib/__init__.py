@@ -1107,10 +1107,13 @@ class LogoData(object):
             entropy_interval = None
             for i in range(0, seq_length):
                 C = sum(counts[i])
+                print (counts[i])
+                print (C)
                 # FIXME: fixup corebio.moremath.entropy()?
                 if C == 0:
                     ent[i] = 0.0
                 else:
+                    #la entropia es log(A) osea log(20) - counts[i] 
                     ent[i] = R - entropy(counts[i])
         else:
             ent = zeros(seq_length, float64)
@@ -1156,6 +1159,9 @@ class LogoData(object):
         # FIXME: Check seqs.alphabet?
 
         counts = seqs.profile()
+        with open("counts.csv", 'wb') as fout:
+            fout.write(str(counts))
+            fout.close()
         return cls.from_counts(seqs.alphabet, counts, prior)
 
     def __str__(self):
